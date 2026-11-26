@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: frameex-api
+    runtime: python
+    plan: free
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: MAX_CONCURRENT_JOBS
+        value: "2"
+      - key: FFMPEG_THREADS
+        value: "2"
+      - key: FFMPEG_TIMEOUT_SECONDS
+        value: "60"
+      - key: MAX_UPLOAD_MB
+        value: "100"
+      - key: MAX_FRAMES
+        value: "300"
+      - key: MAX_FPS
+        value: "60"
+      - key: ALLOW_PRIVATE_URLS
+        value: "false"
